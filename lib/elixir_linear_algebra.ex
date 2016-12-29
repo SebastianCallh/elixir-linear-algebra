@@ -1,3 +1,0 @@
-defmodule ELA do
-
-end

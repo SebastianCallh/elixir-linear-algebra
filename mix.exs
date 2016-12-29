@@ -3,7 +3,7 @@ defmodule ElixirLinearAlgebra.Mixfile do
 
   def project do
     [app: :elixir_linear_algebra,
-     version: "0.1.0",
+     version: "0.9.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -34,7 +34,7 @@ defmodule ElixirLinearAlgebra.Mixfile do
 
   defp package do
     [name: :ELA,
-     files: ["lib", "priv", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+     files: ["lib", "test", "mix.exs", "README*", "LICENSE*"],
      links: %{"GitHub" => "https://github.com/SebastianCallh/elixir-linear-algebra"},
      licenses: ["MIT License"],  
      maintainers: ["Sebastian Callh"]]
@@ -42,7 +42,7 @@ defmodule ElixirLinearAlgebra.Mixfile do
 
   defp description do
     """
-    Elixir Linear Algebra (ELA for short) contains functionality for working with vectors and matries. Focuses on easy of use and consistency.
+    Elixir Linear Algebra (ELA for short) contains functionality for working with both vectors and matrices. 
     """
   end
 end
