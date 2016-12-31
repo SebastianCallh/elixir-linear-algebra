@@ -112,8 +112,8 @@ defmodule ELA.Matrix do
   Returns a row equivalent matrix on reduced row echelon form.
   """
   @spec reduce([[number]]) :: [[number]]
-  def reduce(a, i \\ 0)  
-  def reduce(a, i) do
+  def reduce(a), do: reduce(a, 0)
+  defp reduce(a, i) do
     r = Enum.at(a, i)
     j = Enum.find_index(r, fn(e) -> e != 0 end)
     a = pivot(a, i, j)
@@ -126,4 +126,5 @@ defmodule ELA.Matrix do
 	a
     end
   end
+    
 end

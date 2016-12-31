@@ -92,7 +92,7 @@ defmodule ELA.Vector do
   end
 
   @doc"""
-  Calculates the norm of a vector.
+  Calculates the euclidian norm of a vector.
   """
   @spec norm([number]) :: number
   def norm(v) do
