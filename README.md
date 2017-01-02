@@ -10,7 +10,7 @@ def deps do
     [{:elixir_linear_algebra, "~> 0.9.2", hex: :ela}]
 end
 ``` 
-## Implemented and planned featuresa
+## Implemented and planned features
 - [x] Vector
   - [x] Addition
   - [x] Subtraction
