@@ -1,5 +1,5 @@
 # Elixir-Linear-Algebra
-Vector and matrix-operations implemented in Elixir. The goal of Elixir-Linear-Algebra (ELA for short) is to provide a complete and consistend set of functions for basic linear algebra operations. Should you want to contribute you are more than welcome to!
+Vector and matrix-operations implemented in Elixir. The goal of Elixir-Linear-Algebra (ELA for short) is to provide a complete and consistent set of functions for basic linear algebra operations. Should you want to contribute you are more than welcome to!
 
 
 
