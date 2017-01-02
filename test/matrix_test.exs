@@ -210,5 +210,53 @@ defmodule MatrixTest do
 				[0.0, 0.0],
 				[0.0, 0.0]]
   end
+
+
+    test "LU decomposition" do
+    a = [[1, 3, 5],
+	 [2, 4, 7],
+	 [1, 1, 0]]
+
+    p = [[0, 1, 0],
+	 [1, 0, 0],
+	 [0, 0, 1]]
+    
+    u = [[2,  4,  7],
+	 [0.5,  1.0,  1.5],
+	 [0.5,  -1.0, -2.0]]
+    
+    assert Matrix.lu(a) == {u, p}
+  end
+
+  test "determinant of non-square matrix" do
+    a = [[1, 3],
+	 [2, 4],
+	 [1, 1]]
+
+    assert_raise ArgumentError, fn() -> Matrix.det(a) end
+  end
   
+  test "determinant of matrix" do
+    a = [[1, 3, 5],
+	 [2, 4, 7],
+	 [1, 1, 0]]
+
+    assert Matrix.det(a) == 4
+  end
+
+  test "diagonal of non-square matrix" do
+    a = [[1, 3],
+	 [2, 4],
+	 [1, 1]]
+
+    assert_raise ArgumentError, fn() -> Matrix.det(a) end
+  end
+
+  test "diagonal of matrix" do
+    a = [[1, 3, 5],
+	 [2, 4, 7],
+	 [1, 1, 0]]
+    
+    assert Matrix.diagonal(a) === [1, 4, 0]
+  end
 end

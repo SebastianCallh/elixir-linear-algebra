@@ -19,7 +19,8 @@ erl_crash.dump
 
 #Emacs
 *~
-#*#
+*#
+*.#
 
 #notes
 notes.txt

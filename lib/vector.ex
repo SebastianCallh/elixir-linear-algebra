@@ -26,8 +26,8 @@ defmodule ELA.Vector do
 
   ## Examples
     
-    iex> Vector.add([1, 2, 1], [2, 2, 2])
-    [3, 4, 3]
+      iex> Vector.add([1, 2, 1], [2, 2, 2])
+      [3, 4, 3]
       
   """
   @spec add([number], [number]) :: [number]
@@ -42,8 +42,8 @@ defmodule ELA.Vector do
 
   ## Examples
     
-    iex> Vector.sub([1, 2, 1], [2, 2, 2])
-    [-1, 0, -1]
+      iex> Vector.sub([1, 2, 1], [2, 2, 2])
+      [-1, 0, -1]
 
   """
   @spec sub([number], [number]) :: [number]
@@ -60,8 +60,8 @@ defmodule ELA.Vector do
 
   ## Examples
     
-    iax> Vector.hadmard([1, 2], [2, 2])
-    [2, 4]
+      iax> Vector.hadmard([1, 2], [2, 2])
+      [2, 4]
   
   """
   @spec hadmard([number], [number]) :: [number]
@@ -77,8 +77,8 @@ defmodule ELA.Vector do
 
   ## Examples      
 
-    iex> Vector.cross([1, 2, 1], [2, 2, 2])
-    [2, 0, -2]
+      iex> Vector.cross([1, 2, 1], [2, 2, 2])
+      [2, 0, -2]
 
   """
   @spec cross([number], [number]) :: [number]
@@ -97,8 +97,8 @@ defmodule ELA.Vector do
 
   ## Examples      
 
-    iex> Vector.scalar([2, 2, 2], 2)
-    [4, 4, 4]
+      iex> Vector.scalar([2, 2, 2], 2)
+      [4, 4, 4]
 
   """
   @spec scalar([number], number) :: [number]
@@ -112,8 +112,8 @@ defmodule ELA.Vector do
 
   ## Examples
     
-    iex> Vector.dot([1, 2, 1], [2, 2, 2])
-    8
+      iex> Vector.dot([1, 2, 1], [2, 2, 2])
+      8
   
   """
   @spec dot([number], [number]) :: number
@@ -128,10 +128,10 @@ defmodule ELA.Vector do
 
   ## Examples
   
-    iex> Vector.transp([1, 1, 1])
-    [[1],
-    [1],
-    [1]]
+      iex> Vector.transp([1, 1, 1])
+      [[1],
+      [1],
+      [1]]
     
   """
   def transp(v) when is_number(hd(v)) do
@@ -146,8 +146,8 @@ defmodule ELA.Vector do
 
   ## Examples
   
-    iex> Vector.norm([3, 4])
-    0.5
+      iex> Vector.norm([3, 4])
+      0.5
       
   """
   @spec norm([number]) :: number
