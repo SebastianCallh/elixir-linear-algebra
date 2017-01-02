@@ -12,8 +12,8 @@ defmodule ELA.Matrix do
 
     iex> Matrix.identity(3)
     [[1, 0, 0],
-    [0, 1, 0],
-    [0, 0, 1]]
+     [0, 1, 0],
+     [0, 0, 1]]
 
   """
   @spec identity(number) ::[[number]]
@@ -31,8 +31,8 @@ defmodule ELA.Matrix do
     
     iex> Matrix.new(3, 2)
     [[0, 0],
-    [0, 0],
-    [0, 0]]
+     [0, 0],
+     [0, 0]]
   
   """
   @spec new(number, number) :: [[number]]
@@ -40,13 +40,12 @@ defmodule ELA.Matrix do
     for _ <- 1..n, do: for _ <- 1..m, do: 0
   end
   
-  @docs"""
+  @doc"""
   Transposes a matrix.
 
   ## Examples
 
-    iex> Matrix.transp([[1, 2, 3],
-                    [4, 5, 6]])
+    iex> Matrix.transp([[1, 2, 3], [4, 5, 6]])
     [[1, 4],
      [2, 5],
      [3, 6]]
@@ -139,15 +138,16 @@ defmodule ELA.Matrix do
 
   ## Examples
 
-    iex> Matrix.mult([1, 1], [[1, 0, 1],
-                          [1, 1, 1]])
+    iex> Matrix.mult([1, 1], 
+                     [[1, 0, 1],
+                      [1, 1, 1]])
     [[2, 1, 2]]
 
     iex> Matrix.mult([[1, 0, 1],
                       [1, 1, 1]],
-                     [[1],
-                      [1],
-                      [1]])
+                      [[1],
+                       [1],
+                       [1]])
     [[2],
      [3]]
 
@@ -182,7 +182,7 @@ defmodule ELA.Matrix do
   pivot element 1 and all others in the same column 0.
 
   ## Examples
-
+    
     iex> Matrix.pivot([[2.0, 3.0],
                        [2.0, 3.0],
                        [3.0, 6.0]], 1, 0)

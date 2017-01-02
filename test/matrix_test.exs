@@ -1,6 +1,6 @@
 defmodule MatrixTest do
   use ExUnit.Case, async: true
-  doctest ELA.Matrix
+  
 
   alias ELA.Matrix, as: Matrix
   alias ELA.Vector, as: Vector

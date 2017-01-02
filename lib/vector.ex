@@ -9,7 +9,7 @@ defmodule ELA.Vector do
   Returns a vector with zeroes with provided dimension.
   
   ## Examples
-      
+     
       iex> Vector.new(3)
       [0, 0, 0]
 
