@@ -127,6 +127,7 @@ defmodule ELA.Matrix do
        [0, 2]]
 
   """
+  @spec hadmard([[number]], [[number]]) :: [[number]]
   def hadmard(a, b) when length(a) !== length(b),
   do: raise(ArgumentError, "The number of rows in the matrices must match.")
   def hadmard(a, b) do
@@ -153,6 +154,7 @@ defmodule ELA.Matrix do
        [3]]
 
   """
+  @spec mult([number], [[number]]) :: [[number]]
   def mult(v, b) when is_number(hd(v)) and is_list(hd(b)), do: mult([v], b)
   def mult(a, v) when is_number(hd(v)) and is_list(hd(a)), do: mult(a, [v])
   def mult(a, b) do
@@ -235,7 +237,7 @@ defmodule ELA.Matrix do
   @doc"""
   Returns the determinat of the matrix. Uses LU-decomposition to calculate it.
 
-  #Examples
+  ## Examples
 
       iex> Matrix.det([[1, 3, 5],
       ...>             [2, 4, 7],
@@ -243,6 +245,7 @@ defmodule ELA.Matrix do
       4
 
   """
+  @spec det([[number]]) :: number
   def det(a) when length(a) !== length(hd(a)),
   do: raise(ArgumentError, "Matrix #{inspect a} must be square to have a determinant.")
   def det(a) do
@@ -258,7 +261,7 @@ defmodule ELA.Matrix do
   @doc"""
   Returns a list of the matrix diagonal elements.
 
-  ##Examples
+  ## Examples
       
       iex> Matrix.diagonal([[1, 3, 5],
       ...>                  [2, 4, 7],
@@ -266,6 +269,7 @@ defmodule ELA.Matrix do
       [1, 4, 0]
 
   """
+  @spec diagonal([[number]]) :: [number]
   def diagonal(a) when length(a) !== length(hd(a)),
   do: raise(ArgumentError, "Matrix #{inspect a} must be square to have a diagonal.")
   def diagonal(a), do: diagonal(a, 0)  
@@ -290,6 +294,7 @@ defmodule ELA.Matrix do
         [0, 0, 1]]}
 
   """
+  @spec lu([[number]]) :: {[[number]], [[number]]}
   def lu(a) do
     p = lu_perm_matrix(a)
     a = mult(p, a)
@@ -300,18 +305,21 @@ defmodule ELA.Matrix do
     {a, p}
   end
 
+  @spec lu_rows([[number]]) :: [[number]]
   defp lu_rows(a), do: lu_rows(a, 1)
   defp lu_rows(a, i) when i === map_size(a) + 1, do: a
   defp lu_rows(a, i) do
     lu_rows(lu_row(a, i), i + 1)
   end
 
+  @spec lu_row([[number]], number) :: [[number]]					      
   defp lu_row(a, i), do: lu_row(a, i, 1)
   defp lu_row(a, _, j) when j === map_size(a) + 1, do: a
   defp lu_row(a, i, j) do
     lu_row(Map.put(a, i, Map.put(a[i], j, parse(a, i, j))), i, j + 1)
   end
 
+  @spec parse([[number]], number, number) :: number						
   defp parse(a, 1, j), do: a[1][j]          #Guard for the case where k <- 1..0
   defp parse(a, i, 1), do: a[i][1]/a[1][1]  #Guard for the case where k <- 1..0
   defp parse(a, i, j) when i > j do
@@ -343,6 +351,7 @@ defmodule ELA.Matrix do
     lu_perm_matrix(a, p, i + 1)
   end
 
+  @spec lu_map_matrix([]) :: %{}						       
   defp lu_map_matrix(l, m \\ %{}, i \\ 1)
   defp lu_map_matrix([], m, _), do: m
   defp lu_map_matrix([h|t], m, i) do
