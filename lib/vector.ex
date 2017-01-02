@@ -6,7 +6,13 @@ defmodule ELA.Vector do
   """
 
   @doc"""
-  Returns an empty vector with provided dimension.
+  Returns a vector with zeroes with provided dimension.
+  
+  ## Examples
+      
+      iex> Vector.new(3)
+      [0, 0, 0]
+
   """
   @spec new(number) :: [number]
   def new(n) when not is_number(n),
@@ -17,6 +23,12 @@ defmodule ELA.Vector do
     
   @doc"""
   Performs elementwise addition.
+
+  ## Examples
+    
+    iex> Vector.add([1, 2, 1], [2, 2, 2])
+    [3, 4, 3]
+      
   """
   @spec add([number], [number]) :: [number]
   def add(u, v) when length(u) !== length(v),
@@ -27,6 +39,12 @@ defmodule ELA.Vector do
 
   @doc"""
   Performs elementwise subtraction.
+
+  ## Examples
+    
+    iex> Vector.sub([1, 2, 1], [2, 2, 2])
+    [-1, 0, -1]
+
   """
   @spec sub([number], [number]) :: [number]
   def sub(u, v) when length(u) !== length(v),
@@ -39,6 +57,12 @@ defmodule ELA.Vector do
   @doc"""
   Performs elementwise multiplication between two vectors. 
   This is the Hadmard product, but for vectors.
+
+  ## Examples
+    
+    iax> Vector.hadmard([1, 2], [2, 2])
+    [2, 4]
+  
   """
   @spec hadmard([number], [number]) :: [number]
   def hadmard(u, v) when length(u) !== length(v),
@@ -50,6 +74,12 @@ defmodule ELA.Vector do
   @doc"""
   Calculates the cross product.
   Is only defined for vectors with size three.
+
+  ## Examples      
+
+    iex> Vector.cross([1, 2, 1], [2, 2, 2])
+    [2, 0, -2]
+
   """
   @spec cross([number], [number]) :: [number]
   def cross(u, v) when length(u) !== 3 and length(v) !== 3,
@@ -64,6 +94,12 @@ defmodule ELA.Vector do
 
   @doc"""
   Elementwise multiplication with a scalar.
+
+  ## Examples      
+
+    iex> Vector.scalar([2, 2, 2], 2)
+    [4, 4, 4]
+
   """
   @spec scalar([number], number) :: [number]
   def scalar(v, s) do
@@ -73,6 +109,12 @@ defmodule ELA.Vector do
   @doc"""
   Calculates the dot product.
   Multiplying empty vectors return 0.
+
+  ## Examples
+    
+    iex> Vector.dot([1, 2, 1], [2, 2, 2])
+    8
+  
   """
   @spec dot([number], [number]) :: number
   def dot(u, v) when length(u) !== length(v),
@@ -83,6 +125,14 @@ defmodule ELA.Vector do
 
   @doc"""
   Transponates the vector. Column vectors are two-dimensional.
+
+  ## Examples
+  
+    iex> Vector.transp([1, 1, 1])
+    [[1],
+    [1],
+    [1]]
+    
   """
   def transp(v) when is_number(hd(v)) do
     Enum.map(v, fn(x) -> [x] end)
@@ -93,6 +143,12 @@ defmodule ELA.Vector do
 
   @doc"""
   Calculates the euclidian norm of a vector.
+
+  ## Examples
+  
+    iex> Vector.norm([3, 4])
+    0.5
+      
   """
   @spec norm([number]) :: number
   def norm(v) do

@@ -7,6 +7,14 @@ defmodule ELA.Matrix do
 
   @doc"""
   Returns an identity matrix with the provided dimension.
+
+  ## Examples
+
+    iex> Matrix.identity(3)
+    [[1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1]]
+
   """
   @spec identity(number) ::[[number]]
   def identity(n) do
@@ -18,6 +26,14 @@ defmodule ELA.Matrix do
   
   @doc"""
   Returns a matrix filled wiht zeroes as with n rows and m columns.
+
+  ## Examples
+    
+    iex> Matrix.new(3, 2)
+    [[0, 0],
+    [0, 0],
+    [0, 0]]
+  
   """
   @spec new(number, number) :: [[number]]
   def new(n, m) do
@@ -26,6 +42,15 @@ defmodule ELA.Matrix do
   
   @docs"""
   Transposes a matrix.
+
+  ## Examples
+
+    iex> Matrix.transp([[1, 2, 3],
+                    [4, 5, 6]])
+    [[1, 4],
+     [2, 5],
+     [3, 6]]
+
   """
   @spec transp([[number]]) :: [[number]]
   def transp(a) do
@@ -34,6 +59,15 @@ defmodule ELA.Matrix do
 
   @doc"""
   Performs elmentwise addition
+
+  ## Examples
+    iex> Matrix.add([[1, 2, 3],
+                     [1, 1, 1]],
+                    [[1, 2, 2],
+                     [1, 2, 1]])
+    [[2, 4, 5],
+     [2, 3, 2]]
+
   """
   @spec add([[number]], [[number]]) :: [[number]]
   def add(a, b) do
@@ -45,6 +79,16 @@ defmodule ELA.Matrix do
 
   @doc"""
   Performs elementwise subtraction
+
+  ## Examples
+
+    iex> Matrix.sub([[1, 2, 3],
+                     [1, 2, 2]],
+                    [[1, 2, 3],
+                     [2, 2, 2]])
+    [[0, 0, 0],
+     [-1, 0, 0]]
+
   """
   @spec sub([[number]], [[number]]) :: [[number]]
   def sub(a, b) when length(a) !== length(b),
@@ -55,6 +99,14 @@ defmodule ELA.Matrix do
 
   @doc"""
   Elementwise mutiplication with a scalar.
+
+  ## Examples
+    
+    iex> Matrix.scalar([[2, 2, 2],
+                        [1, 1, 1]], 2)
+    [[4, 4, 4],
+     [2, 2, 2]]
+
   """
   @spec scalar([[number]], number) :: [[number]]
   def scalar(a, s) do
@@ -64,6 +116,16 @@ defmodule ELA.Matrix do
   @doc"""
   Elementwise multiplication with two matrices.
   This is known as the Hadmard product.
+
+  ## Examples
+    
+    iex> Matrix.hadmard([[1, 2],
+                         [1, 1]],
+                        [[1, 2],
+                         [0, 2]])
+    [[1, 4],
+     [0, 2]]
+
   """
   def hadmard(a, b) when length(a) !== length(b),
   do: raise(ArgumentError, "The number of rows in the matrices must match.")
@@ -74,6 +136,21 @@ defmodule ELA.Matrix do
   @doc"""
   Matrix multiplication. Can also multiply matrices with vectors.
   Always returns a matrix.
+
+  ## Examples
+
+    iex> Matrix.mult([1, 1], [[1, 0, 1],
+                          [1, 1, 1]])
+    [[2, 1, 2]]
+
+    iex> Matrix.mult([[1, 0, 1],
+                      [1, 1, 1]],
+                     [[1],
+                      [1],
+                      [1]])
+    [[2],
+     [3]]
+
   """
   def mult(v, b) when is_number(hd(v)) and is_list(hd(b)), do: mult([v], b)
   def mult(a, v) when is_number(hd(v)) and is_list(hd(a)), do: mult(a, [v])
@@ -85,6 +162,13 @@ defmodule ELA.Matrix do
   
   @doc"""
   Returns a tuple with the matrix dimensions as {rows, cols}.
+
+  ## Examples
+
+    Matrix.dim([[1, 1, 1],
+                [2, 2, 2]])
+    {2, 3}
+
   """
   @spec dim([[number]]) :: {integer, integer}
   def dim(a) when length(a) === 0, do: 0
@@ -96,6 +180,16 @@ defmodule ELA.Matrix do
   Pivots them matrix a on the element on row n, column m (zero indexed).
   Pivoting performs row operations to make the 
   pivot element 1 and all others in the same column 0.
+
+  ## Examples
+
+    iex> Matrix.pivot([[2.0, 3.0],
+                       [2.0, 3.0],
+                       [3.0, 6.0]], 1, 0)
+    [[0.0, 0.0],
+     [1.0, 1.5],
+     [0.0, 1.5]]
+
   """
   @spec pivot([[number]], number, number) :: [[number]]
   def pivot(a, n, m) do
@@ -110,6 +204,16 @@ defmodule ELA.Matrix do
   
   @doc"""
   Returns a row equivalent matrix on reduced row echelon form.
+
+  ## Examples
+    
+    iex> Matrix.reduce([[1.0, 1.0, 2.0, 1.0],
+                        [2.0, 1.0, 6.0, 4.0],
+                        [1.0, 2.0, 2.0, 3.0]])
+    [[1.0, 0.0, 0.0, -5.0],
+     [0.0, 1.0, 0.0, 2.0],
+     [0.0, 0.0, 1.0, 2.0]]
+
   """
   @spec reduce([[number]]) :: [[number]]
   def reduce(a), do: reduce(a, 0)
@@ -125,6 +229,5 @@ defmodule ELA.Matrix do
       else
 	a
     end
-  end
-    
+  end    
 end

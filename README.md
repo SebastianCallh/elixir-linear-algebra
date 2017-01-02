@@ -1,11 +1,46 @@
 # Elixir-Linear-Algebra
 Vector and matrix-operations implemented in Elixir. The goal of Elixir-Linear-Algebra (ELA for short) is to provide a complete and consistend set of functions for basic linear algebra operations. Should you want to contribute you are more than welcome to!
 
-## Implementation
-The implementation for both vectors and matrices use Elixir lists, which under the hood are linked lists. Because of this accessing individual elements takes linear time.
 
-    
+
+## Installation
+Simply add ELA to your list of dependencies in your mix.exs file, then run `mix deps.get`.
+``` 
+def deps do
+    [{:elixir_linear_algebra, "~> 0.9.2", hex: :ela}]
+end
+``` 
+## Implemented and planned featuresa
+- [x] Vector
+  - [x] Addition
+  - [x] Subtraction
+  - [x] Scalar multiplication
+  - [x] Dot product
+  - [x] Cross product
+  - [x] Hadmard product
+  - [X] Euclidian norm
+  
+- [ ] Matrix
+  - [x] Addition
+  - [x] Subtraction
+  - [x] Scalar multiplication
+  - [x] Vector multiplication
+  - [x] Matrix multiplication
+  - [x] Hadmard product
+  - [x] Pivoting
+  - [x] Reduced row echelon form
+  - [ ] LU decomposition
+  - [ ] Determinants
+  - [ ] Inverse
+
 ## Vector operations
+
+Creation
+``` 
+iex> Vector.new(3)
+[0, 0, 0]
+```
+
 Addition
 ``` 
 iex> Vector.add([1, 2, 1], [2, 2, 2])
@@ -34,6 +69,18 @@ Cross product
 ``` 
 iex> Vector.cross([1, 2, 1], [2, 2, 2])
 [2, 0, -2]
+```
+
+Hadmard product
+```
+iax> Vector.hadmard([1, 2], [2, 2])
+[2, 4]
+```
+
+Euclidian norm
+``` 
+iex> Vector.norm([3, 4])
+0.5
 ``` 
 
 Transpose
@@ -94,6 +141,9 @@ Multiplication with vector
 iex> Matrix.mult([1, 1], [[1, 0, 1],
                           [1, 1, 1]])
 [[2, 1, 2]]
+```
+
+``` 
 iex> Matrix.mult([[1, 0, 1],
                   [1, 1, 1]],
                  [[1],
@@ -113,6 +163,17 @@ iex> Matrix.mult([[1, 2],
  [1, 4]]
 ``` 
 
+Hadmard product
+```
+iex> Matrix.hadmard([[1, 2],
+                     [1, 1]],
+                    [[1, 2],
+                     [0, 2]])
+[[1, 4],
+ [0, 2]]
+```
+
+
 Transpose
 ``` 
 iex> Matrix.transp([[1, 2, 3],
@@ -120,6 +181,13 @@ iex> Matrix.transp([[1, 2, 3],
 [[1, 4],
  [2, 5],
  [3, 6]]
+```
+
+Dimensions
+```
+iex> Matrix.dim([[1, 1, 1],
+                 [2, 2, 2]])
+{2, 3}
 ```
 
 Pivoting
