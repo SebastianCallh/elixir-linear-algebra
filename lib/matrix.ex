@@ -249,13 +249,12 @@ defmodule ELA.Matrix do
   def det(a) when length(a) !== length(hd(a)),
   do: raise(ArgumentError, "Matrix #{inspect a} must be square to have a determinant.")
   def det(a) do
-    {a, p} = lu(a)
-
-    a_dia = diagonal(a)
+    {_, u, p} = lu(a)
+    u_dia = diagonal(u)
     p_dia = diagonal(p)
-    a_det = Enum.reduce(a_dia, 1, &*/2)
+    u_det = Enum.reduce(u_dia, 1, &*/2)
     exp = Enum.count(Enum.filter(p_dia, &(&1 === 0)))/2
-    a_det * :math.pow(-1, exp)
+    u_det * :math.pow(-1, exp)
   end
 
   @doc"""
@@ -278,58 +277,71 @@ defmodule ELA.Matrix do
     [Enum.at(h, i)] ++ diagonal(t, i + 1)
   end
 
+  
   @doc"""
-  Returns an LU-decomposed matrix with the permutation matrix used on the form {a, p}.
-
+  Returns an LU-decomposition on Crout's form with the permutation matrix used on the form {l, u, p}.
+  
   ## Examples
     
       iex> Matrix.lu([[1, 3, 5],
       ...>            [2, 4, 7],
       ...>            [1, 1, 0]])
-      {[[2,  4,  7],
-        [0.5,  1.0,  1.5],
-        [0.5,  -1.0, -2.0]],
+      {[[1,    0,  0],
+	[0.5,  1,  0],
+	[0.5, -1,  1]],
+       [[2,  4,    7],
+        [0,  1.0,  1.5],
+        [0,  0,   -2.0]]
        [[0, 1, 0],
         [1, 0, 0],
         [0, 0, 1]]}
 
   """
-  @spec lu([[number]]) :: {[[number]], [[number]]}
+  @spec lu([[number]]) :: {[[number]], [[number]], [[number]]}
   def lu(a) do
     p = lu_perm_matrix(a)
     a = mult(p, a)
     a = lu_map_matrix(a)
-
-    a = lu_rows(a)
-    a = Enum.map(a, fn({_, v}) -> Enum.map(v, fn({_, v}) -> v end) end)
-    {a, p}
+    n = map_size(a)
+    u = lu_map_matrix(new(n, n))
+    l = lu_map_matrix(identity(n))
+    {l, u} = lu_rows(a, l, u)
+    l = Enum.map(l, fn({_, v}) -> Enum.map(v, fn({_, v}) -> v end) end)
+    u = Enum.map(u, fn({_, v}) -> Enum.map(v, fn({_, v}) -> v end) end)
+    {l, u, p}
   end
 
-  @spec lu_rows([[number]]) :: [[number]]
-  defp lu_rows(a), do: lu_rows(a, 1)
-  defp lu_rows(a, i) when i === map_size(a) + 1, do: a
-  defp lu_rows(a, i) do
-    lu_rows(lu_row(a, i), i + 1)
+  @spec lu_rows([[number]], [[number]], [[number]]) :: {[[number]], [[number]]}
+  defp lu_rows(a, l, u), do: lu_rows(a, l, u, 1)
+  defp lu_rows(a, l, u, i) when i === map_size(a) + 1, do: {l, u}
+  defp lu_rows(a, l, u, i) do
+    {l, u} = lu_row(a, l, u, i)
+    lu_rows(a, l, u, i + 1)
+  end
+   
+  @spec lu_row([[number]], [[number]], [[number]], number) :: {[[number]], [[number]]}
+  defp lu_row(a, l, u, i), do: lu_row(a, l, u, i, 1)
+  defp lu_row(a, l, u, _, j) when j === map_size(a) + 1, do: {l, u}
+  defp lu_row(a, l, u, i, j) do
+    {l, u} =
+      case {i, j} do
+	{i, j} when i >  j -> {Map.put(l, i, Map.put(l[i], j, calc_lower(a, l, u, i, j))), u}
+	{i, j} when i <= j -> {l, Map.put(u, i, Map.put(u[i], j, calc_upper(a, l, u, i, j)))}
+      end
+    lu_row(a, l, u, i, j + 1)
   end
 
-  @spec lu_row([[number]], number) :: [[number]]					      
-  defp lu_row(a, i), do: lu_row(a, i, 1)
-  defp lu_row(a, _, j) when j === map_size(a) + 1, do: a
-  defp lu_row(a, i, j) do
-    lu_row(Map.put(a, i, Map.put(a[i], j, parse(a, i, j))), i, j + 1)
+  @spec calc_upper([[number]], [[number]], [[number]], number, number) :: number
+  defp calc_upper(a, _, _, 1, j), do: a[1][j]          #Guard for the case where k <- 1..0
+  defp calc_upper(a, l, u, i, j) do
+    a[i][j] - Enum.sum(for k <- 1..i-1, do: u[k][j] * l[i][k])
   end
-
-  @spec parse([[number]], number, number) :: number						
-  defp parse(a, 1, j), do: a[1][j]          #Guard for the case where k <- 1..0
-  defp parse(a, i, 1), do: a[i][1]/a[1][1]  #Guard for the case where k <- 1..0
-  defp parse(a, i, j) when i > j do
-    (a[i][j] - Enum.sum(for k <- 1..j-1, do: a[k][j] * a[i][k]))/a[j][j]
+  @spec calc_lower([[number]], [[number]], [[number]], number, number) :: number
+  defp calc_lower(a, _, u, i, 1), do: a[i][1]/u[1][1]  #Guard for the case where k <- 1..0
+  defp calc_lower(a, l, u, i, j) do
+    (a[i][j] - Enum.sum(for k <- 1..j-1, do: u[k][j] * l[i][k]))/u[j][j]
   end
-  defp parse(a, i, j) when i <= j do
-    a[i][j] - Enum.sum(for k <- 1..i-1, do: a[k][j] * a[i][k])
-  end
-
-
+  
   @spec lu_perm_matrix([[number]]) :: [[number]]
   defp lu_perm_matrix(a), do: lu_perm_matrix(transp(a), identity(length(a)), 0)
   defp lu_perm_matrix(a, p, i) when i === length(a) - 1, do: p

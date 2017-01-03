@@ -212,7 +212,7 @@ defmodule MatrixTest do
   end
 
 
-    test "LU decomposition" do
+  test "LU decomposition" do
     a = [[1, 3, 5],
 	 [2, 4, 7],
 	 [1, 1, 0]]
@@ -220,14 +220,18 @@ defmodule MatrixTest do
     p = [[0, 1, 0],
 	 [1, 0, 0],
 	 [0, 0, 1]]
-    
-    u = [[2,  4,  7],
-	 [0.5,  1.0,  1.5],
-	 [0.5,  -1.0, -2.0]]
-    
-    assert Matrix.lu(a) == {u, p}
-  end
 
+    l = [[1,    0,  0],
+	 [0.5,  1,  0],
+	 [0.5, -1,  1]]
+    
+    u = [[2,  4,    7],
+	 [0,  1.0,  1.5],
+	 [0,  0,   -2.0]]
+    
+    assert Matrix.lu(a) == {l, u, p}
+  end
+  
   test "determinant of non-square matrix" do
     a = [[1, 3],
 	 [2, 4],
