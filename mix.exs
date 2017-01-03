@@ -3,7 +3,7 @@ defmodule ElixirLinearAlgebra.Mixfile do
 
   def project do
     [app: :elixir_linear_algebra,
-     version: "0.9.4",
+     version: "1.0.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

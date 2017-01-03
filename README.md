@@ -7,7 +7,7 @@ Vector and matrix-operations implemented in Elixir. The goal of Elixir-Linear-Al
 Simply add ELA to your list of dependencies in your mix.exs file, then run `mix deps.get`.
 ``` 
 def deps do
-    [{:elixir_linear_algebra, "~> 0.9.3", hex: :ela}]
+    [{:elixir_linear_algebra, "~> 0.9.5", hex: :ela}]
 end
 ``` 
 ## Implemented and planned features
@@ -20,7 +20,7 @@ end
   - [x] Hadmard product
   - [X] Euclidian norm
   
-- [ ] Matrix
+- [x] Matrix
   - [x] Addition
   - [x] Subtraction
   - [x] Scalar multiplication
@@ -31,7 +31,6 @@ end
   - [x] Reduced row echelon form
   - [x] LU decomposition
   - [x] Determinants
-  - [ ] Inverse
 
 ## Vector operations
 
@@ -210,7 +209,7 @@ iex> Matrix.reduce([[1.0, 1.0, 2.0, 1.0],
 ```
 
 LU decomposition
-Returns the decomposed matrix and the permutation matrix used in a touple.
+Returns a LUP  decomposed matrix as a tuple.
 ```
 iex> Matrix.lu([[1, 3, 5],
                 [2, 4, 7],
@@ -227,7 +226,7 @@ iex> Matrix.lu([[1, 3, 5],
 
 iex> Matrix.lu([[1, 3, 5],
                 [2, 4, 7],
-		[1, 1, 0]])
+                [1, 1, 0]])
 {[[2,  4,  7],
   [0.5,  1.0,  1.5],
   [0.5,  -1.0, -2.0]],
@@ -237,7 +236,7 @@ iex> Matrix.lu([[1, 3, 5],
 ```
 
 
-Detreminant
+Determinant
 ```
 iex> Matrix.det([[1, 3, 5],
                  [2, 4, 7],
